@@ -4,13 +4,12 @@ import { getShowsById, ShowDetailType } from "../Api";
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { Interweave } from 'interweave';
 
-const DetailPage = ({isAuth} : any) => {
+const DetailPage = () => {
     const { showId } = useParams();
     const [showDetail, setShowDetail] = useState<ShowDetailType | null>(null);
 
     useEffect(() => {
-        
-        if (!!showId && isAuth) { // ! rinnega e transforma in booleano, !! doppia negazione
+        if (!!showId) { // ! rinnega e transforma in booleano, !! doppia negazione
             try {
                 const showIdNum = parseInt(showId);
                 getShowsById(showIdNum).then((show) => {
@@ -21,10 +20,7 @@ const DetailPage = ({isAuth} : any) => {
                 console.error("NaN")
             }
         }
-        else {
-            window.location.pathname = '/login'
-        }
-    }, [showId, isAuth]) // con array vuoto, solo mount | se si specifica dei parametri viene eseguito al mount e al update
+    }, [showId]) // con array vuoto, solo mount | se si specifica dei parametri viene eseguito al mount e al update
 
     return <>{!!showDetail ?
         <Card sx={{ maxWidth: 345, justifyContent: "center", alignItem: "center", margin: "2em", }} >
@@ -59,7 +55,9 @@ const DetailPage = ({isAuth} : any) => {
             </CardActions>
         </Card>
         : "Loading.."}
+
+        <Button variant="contained" href="/">Back</Button>
     </>;
 }
- 
+
 export default DetailPage;
