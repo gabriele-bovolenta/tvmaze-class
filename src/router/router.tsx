@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Home from '../pages/Home'
-import Login from '../pages/Login'
-import SearchPage from "../pages/SearchPage";
-import DetailPage from "../pages/DetailPage";
-import Favourite from '../pages/Favourite'
+import Home from '../Pages/Home'
+import Login from '../Pages/Login'
+import SearchPage from "../Pages/SearchPage";
+import DetailPage from "../Pages/DetailPage";
+import Favourite from '../Pages/Favourite'
 
 const Router = () => {
 
