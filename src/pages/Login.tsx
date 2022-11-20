@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
 import { Avatar, Box, Container, CssBaseline, TextField, Typography } from '@mui/material';
+import GoogleButton from 'react-google-button'
 
 function Login() {
 
@@ -18,15 +19,14 @@ function Login() {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
-                alert('Success')
                 navigate('/');
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
 
-                console.log(errorCode);
-                console.log(errorMessage);
+                alert(errorCode);
+                alert(errorMessage);
             });
     }
 
@@ -78,18 +78,14 @@ function Login() {
                         <Button
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 2, mb: 2 }}
                             onClick={signUp}
                         >
                             Sign In
                         </Button>
-                        <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={signWithGoogle}>
-                            Sign with Google
-                        </Button>
+                        <GoogleButton
+                            onClick={signWithGoogle}
+                        />
                     </Box>
                 </Box>
             </Container>
