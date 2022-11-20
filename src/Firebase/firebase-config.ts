@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore } from 'firebase/firestore'
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+const firebaseui = require('firebaseui');
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,14 +16,13 @@ const firebaseConfig = {
   appId: "1:1090544608033:web:eac3700f2ee0fc760f9460"
 };
 
-/* var firebase = require('firebase');
-var firebaseui = require('firebaseui');
-
-export var ui = new firebaseui.auth.AuthUI(firebase.auth()); */
-
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = firebase.initializeApp(firebaseConfig);
+export const auth = firebase.auth();
 
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
+
+// Initialize the FirebaseUI Widget using Firebase.
+export const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+
+
