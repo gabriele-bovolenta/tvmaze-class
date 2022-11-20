@@ -3,6 +3,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 const firebaseui = require('firebaseui');
 
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,10 +20,8 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
+export const provider = new firebase.auth.GoogleAuthProvider();
 
 
 // Initialize the FirebaseUI Widget using Firebase.
 export const ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-
-
