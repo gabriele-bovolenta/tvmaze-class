@@ -4,7 +4,7 @@ import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
-import { Avatar, Box, Checkbox, Container, CssBaseline, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Container, CssBaseline, TextField, Typography } from '@mui/material';
 
 function Login() {
 
@@ -17,11 +17,9 @@ function Login() {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-
                 console.log(user);
                 alert('Success')
                 navigate('/');
-
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -50,12 +48,11 @@ function Login() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    </Avatar>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={signUp} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
@@ -65,6 +62,7 @@ function Login() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
                             margin="normal"
@@ -75,27 +73,22 @@ function Login() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <Button
-                            type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={signUp}
                         >
                             Sign In
                         </Button>
                         <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={signWithGoogle}
-                        >
-                            Sign In With Google
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={signWithGoogle}>
+                            Sign with Google
                         </Button>
                     </Box>
                 </Box>
