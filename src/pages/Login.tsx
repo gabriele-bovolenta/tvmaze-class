@@ -3,7 +3,6 @@ import { Avatar, Box, Container, CssBaseline, TextField, Typography } from '@mui
 import GoogleButton from 'react-google-button'
 import { UseUserAuth } from '../Context/authContext';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const { currentUser, signUp, signWithGoogle } = UseUserAuth();
@@ -12,12 +11,9 @@ function Login() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    let navigate = useNavigate()
-
     const handleSignUp = () => {
         try {
             signUp(email, password)
-            navigate('/home')
         } catch (err: any) {
             console.log(err);
         }
@@ -26,7 +22,7 @@ function Login() {
     const handleSignWithGoogle = () => {
         try {
             signWithGoogle()
-            navigate('/home')
+            
         } catch (err: any) {
             console.log(err);
         }
@@ -34,7 +30,6 @@ function Login() {
 
     return (
         <>
-
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box

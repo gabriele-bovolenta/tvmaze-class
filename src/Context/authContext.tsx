@@ -2,7 +2,8 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { auth, provider } from "../Firebase/firebase-config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
 
-interface AuthProviderProps {
+
+export interface AuthProviderProps {
   children: ReactNode
 }
 
@@ -51,13 +52,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signWithGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {
+
     })
   }
 
   const logOut = () => {
     auth.signOut().then(function() {
-      console.log('out');
-      
+
     }).catch(function(error) {
       console.log(error);
     })
