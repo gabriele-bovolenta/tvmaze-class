@@ -9,15 +9,13 @@ import Favourite from '../Pages/Favourite';
 import Navbar from '../Components/navbar'
 
 const Router = () => {
-
     const router = createBrowserRouter([
-        { path: '/', element: <Home /> },
+        { path: '/', element: <Login /> },
+        { path: '/home', element: <Home /> },
         { path: '/login', element: <Login /> },
         { path: '/search', element: <SearchPage /> },
         { path: '/search/:showId', element: <DetailPage /> },
         { path: '/favourite', element: <Favourite /> },
-        { path: '/home', element: <Home /> },
-        { path: '/', element: <Home /> },
     ]);
 
     return (

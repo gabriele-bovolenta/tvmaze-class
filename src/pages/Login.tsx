@@ -1,43 +1,40 @@
 import Button from '@mui/material/Button';
-import { auth, provider } from '../Firebase/firebase-config'
-import { signInWithPopup } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useState } from 'react';
 import { Avatar, Box, Container, CssBaseline, TextField, Typography } from '@mui/material';
 import GoogleButton from 'react-google-button'
+import { UseUserAuth } from '../Context/authContext';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+    const { currentUser, signUp, signWithGoogle } = UseUserAuth();
+    console.log(currentUser?.email);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
-    let navigate = useNavigate();
+    let navigate = useNavigate()
 
-    const signUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
-                navigate('/');
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-
-                alert(errorCode);
-                alert(errorMessage);
-            });
+    const handleSignUp = () => {
+        try {
+            signUp(email, password)
+            navigate('/home')
+        } catch (err: any) {
+            console.log(err);
+        }
     }
 
-    const signWithGoogle = () => {
-        signInWithPopup(auth, provider).then((result) => {
-            navigate('/');
-        })
+    const handleSignWithGoogle = () => {
+        try {
+            signWithGoogle()
+            navigate('/home')
+        } catch (err: any) {
+            console.log(err);
+        }
     }
 
     return (
         <>
+
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -79,12 +76,12 @@ function Login() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 2, mb: 2 }}
-                            onClick={signUp}
+                            onClick={handleSignUp}
                         >
                             Sign In
                         </Button>
                         <GoogleButton
-                            onClick={signWithGoogle}
+                            onClick={handleSignWithGoogle}
                         />
                     </Box>
                 </Box>
