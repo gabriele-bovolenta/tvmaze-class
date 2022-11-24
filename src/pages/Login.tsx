@@ -2,11 +2,19 @@ import Button from '@mui/material/Button';
 import { Avatar, Box, Container, CssBaseline, TextField, Typography } from '@mui/material';
 import GoogleButton from 'react-google-button'
 import { UseUserAuth } from '../Context/authContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const { currentUser, signUp, signWithGoogle } = UseUserAuth();
-    console.log(currentUser?.email);
+
+    let navigate = useNavigate()
+
+    useEffect(() => {
+        if (currentUser !== null) {
+            navigate('/home')
+        }
+    }, [navigate, currentUser])
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -14,6 +22,7 @@ function Login() {
     const handleSignUp = () => {
         try {
             signUp(email, password)
+
         } catch (err: any) {
             console.log(err);
         }
@@ -22,7 +31,6 @@ function Login() {
     const handleSignWithGoogle = () => {
         try {
             signWithGoogle()
-            
         } catch (err: any) {
             console.log(err);
         }

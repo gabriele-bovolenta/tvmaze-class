@@ -2,7 +2,6 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { auth, provider } from "../Firebase/firebase-config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
 
-
 export interface AuthProviderProps {
   children: ReactNode
 }
@@ -36,10 +35,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return unsubscribe;
   }, []);
 
-  const signUp = (email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password)
+  const signUp = async (email: string, password: string) => {
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential);
+        console.log(userCredential.user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -50,16 +49,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
   }
 
-  const signWithGoogle = () => {
-    signInWithPopup(auth, provider).then((result) => {
-
+  const signWithGoogle = async () => {
+    await signInWithPopup(auth, provider).then((result) => {
+      setCurrentUser(result.user);
     })
   }
 
   const logOut = () => {
-    auth.signOut().then(function() {
+    auth.signOut().then(function () {
 
-    }).catch(function(error) {
+    }).catch(function (error) {
       console.log(error);
     })
   }
