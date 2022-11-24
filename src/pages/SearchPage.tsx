@@ -1,11 +1,17 @@
-import { Button, Card, CardContent, CardMedia, FormControl, Grid, InputBase, Paper, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Checkbox, FormControl, Grid, InputBase, Paper, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { getShowsBySearch, ShowType } from "../Api";
 import { Link, useSearchParams } from "react-router-dom";
+import { database } from '../Firebase/firebase-config'
+import { ref, remove, set } from 'firebase/database'
 
 const SearchPage = () => {
     const [currentSearch, setCurrentSearch] = useSearchParams();
     const [shows, setShows] = useState<ShowType[]>([]);
+    const [isChecked, setChecked] = useState<any>(sessionStorage.getItem('isChecked') || false);
+    const label = {
+        inputprops: { 'arial-label': 'checkbox-favourites' }
+    }
 
     const handleOnSearchChange = useCallback(
         (query: string) => {
@@ -13,6 +19,24 @@ const SearchPage = () => {
         },
         [setCurrentSearch]
     );
+
+    const hadleCheckbox = (e: any, id: any, title: any) => {
+        if (e.target.checked) {
+            sessionStorage.setItem(`isChecked: ${id}`, 'true')
+            setChecked(true)
+            set(ref(database, 'movies/' + id), {
+                id: id,
+                name: title
+            });
+            console.log(`${title} con id=${id} aggiunto al database`)
+
+        } else {
+            sessionStorage.setItem(`isChecked: ${id}`, 'false')
+            setChecked(false)
+            remove(ref(database, 'movies/' + id))
+            console.log(`${title} con id=${id} rimosso dal database`)
+        }
+    };
 
     const isSearchButtonDisabled = () => currentSearch.get("search")?.trim().length === 0;
 
@@ -56,17 +80,17 @@ const SearchPage = () => {
             </Grid>
 
             <Grid item style={{ padding: "2em" }} />
-            {shows.map((el) => (
-                <Link to={el.id.toString()}>
-                    <Card sx={{ display: 'flex', alignItems: 'center', margin: '2em' }}>
+            {shows.map((el, i) => (
+                <Card key={i} sx={{ display: 'flex', alignItems: 'center', margin: '2em' }}>
+                        <Checkbox {...label} onChange={(e) => { hadleCheckbox(e, el.id, el.title) }} />
                         <CardMedia component='img' height={140} image={el.image} alt={el.title} />
                         <CardContent>
                             <Typography gutterBottom variant="h5" >{el.title}</Typography>
                         </CardContent>
+                        
+                        <Link to={el.id.toString()}><Button variant="contained">Details</Button></Link>
                     </Card>
-                </Link>
             ))}
-
         </Grid>
     );
 };

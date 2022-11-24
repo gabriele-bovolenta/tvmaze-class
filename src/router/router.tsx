@@ -6,7 +6,7 @@ import SearchPage from "../Pages/SearchPage";
 import DetailPage from "../Pages/DetailPage";
 import Favourite from '../Pages/Favourite';
 
-import Protected from "./protected";
+import Protected from "../Router/protected";
 
 import Navbar from '../Components/navbar'
 
