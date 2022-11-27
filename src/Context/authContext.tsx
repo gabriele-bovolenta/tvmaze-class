@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logOut = () => {
     auth.signOut().then(function () {
-
+      setCurrentUser(null);
     }).catch(function (error) {
       console.log(error);
     })

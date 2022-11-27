@@ -9,6 +9,12 @@ import { UseUserAuth } from '../Context/authContext';
 export default function ButtonAppBar() {
   const { currentUser, logOut } = UseUserAuth();
 
+  if (currentUser === undefined) {
+    return (
+      <></>
+    )
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={{ backgroundColor: 'black' }} position="static">

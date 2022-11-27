@@ -44,11 +44,7 @@ const SearchPage = () => {
             setFavourite(favourite.filter(el => el !== id));
             remove(ref(database, 'favourite/' + id))
             /* console.log(`${title} con id=${id} rimosso dal database`) */
-            
         }
-
-        
-        
     };
 
     const isSearchButtonDisabled = () => currentSearch.get("search")?.trim().length === 0;
