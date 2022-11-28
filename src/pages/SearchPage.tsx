@@ -8,11 +8,7 @@ import { ref, remove, set } from 'firebase/database'
 const SearchPage = () => {
     const [currentSearch, setCurrentSearch] = useSearchParams();
     const [shows, setShows] = useState<ShowType[]>([]);
-    const [favourite, setFavourite ] = useState<number[]>([])
-
-    const label = {
-        inputprops: { 'arial-label': 'checkbox-favourites' }
-    }
+    const [favourite, setFavourite] = useState<number[]>([])
 
     const handleOnSearchChange = useCallback(
         (query: string) => {
@@ -28,21 +24,23 @@ const SearchPage = () => {
     }, [currentSearch]);
 
     const saveToLocalStorage = (items: any) => {
-		localStorage.setItem('favouriteMovies', JSON.stringify(items));
-	};
+        localStorage.setItem('favouriteMovies', JSON.stringify(items));
+    };
 
-    const addFavouriteMovie = (id : number) => {
-		const newFavouriteList = [...favourite, id];
-		setFavourite(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
-	};
+    const label = {
+        inputprops: { 'arial-label': 'checkbox-favourites' }
+    }
+    const addFavouriteMovie = (id: number) => {
+        const newFavouriteList = [...favourite, id];
+        setFavourite(newFavouriteList);
+        saveToLocalStorage(newFavouriteList);
+    };
 
-    const removeFavouriteMovie = (id : number) => {
-		const newFavouriteList = favourite.filter(el => el !== id);
-
-		setFavourite(newFavouriteList);
-		saveToLocalStorage(newFavouriteList);
-	};
+    const removeFavouriteMovie = (id: number) => {
+        const newFavouriteList = favourite.filter(el => el !== id);
+        setFavourite(newFavouriteList);
+        saveToLocalStorage(newFavouriteList);
+    };
 
     const removeMovieDatabase = (id: number) => {
         remove(ref(database, 'favourite/' + id))
@@ -69,9 +67,9 @@ const SearchPage = () => {
     useEffect(() => {
         const movieFavourites = JSON.parse(localStorage.getItem('favouriteMovies')!);
 
-		if (movieFavourites) {
-			setFavourite(movieFavourites);
-		}
+        if (movieFavourites) {
+            setFavourite(movieFavourites);
+        }
 
         const currentSearchStr = currentSearch?.get("search")?.trim();
         if (!!currentSearchStr && currentSearchStr.length > 0 && shows.length === 0) {
