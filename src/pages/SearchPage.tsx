@@ -21,48 +21,64 @@ const SearchPage = () => {
         [setCurrentSearch]
     );
 
-    const hadleCheckbox = (e: any, id: number, title: string) => {
-        if (e.target.checked === true) {
-
-            setFavourite(favourite => [...favourite, id]);
-            
-            set(ref(database, 'favourite/' + id), {
-                id: id,
-                name: title
-            });
-            localStorage.setItem('favouriteMovies', JSON.stringify(favourite))
-
-        } else {
-            setFavourite(favourite.filter(el => el !== id));
-            remove(ref(database, 'favourite/' + id))
-            localStorage.setItem('favouriteMovies', JSON.stringify(favourite))
-        }
-    };
-
     const isSearchButtonDisabled = () => currentSearch.get("search")?.trim().length === 0;
 
     const handleOnSearch = useCallback(() => {
         getShowsBySearch(currentSearch?.get("search") || "").then((res) => setShows(res));
     }, [currentSearch]);
 
-    useEffect(() => {
-        const data : any = localStorage.getItem('favouriteMovies')
-        var array = JSON.parse(data);
-        if (array !== null) {
-            console.log('array data: '+ array);
-            favourite.concat(array);
-            
-            console.log('array2 concatenato: '+ favourite);
-            console.log('favouriteMovies nel local storage: '+favourite);
-            
+    const saveToLocalStorage = (items: any) => {
+		localStorage.setItem('favouriteMovies', JSON.stringify(items));
+	};
+
+    const addFavouriteMovie = (id : number) => {
+		const newFavouriteList = [...favourite, id];
+		setFavourite(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
+
+    const removeFavouriteMovie = (id : number) => {
+		const newFavouriteList = favourite.filter(el => el !== id);
+
+		setFavourite(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
+
+    const removeMovieDatabase = (id: number) => {
+        remove(ref(database, 'favourite/' + id))
+    }
+
+    const addMovieDatabase = (id: number, title: string) => {
+        set(ref(database, 'favourite/' + id), {
+            id: id,
+            name: title
+        });
+    }
+
+    const hadleCheckbox = (e: any, id: number, title: string) => {
+        if (e.target.checked === true) {
+            addFavouriteMovie(id)
+            addMovieDatabase(id, title)
+
+        } else {
+            removeFavouriteMovie(id)
+            removeMovieDatabase(id)
         }
-        
+    };
+
+    useEffect(() => {
+        const movieFavourites = JSON.parse(localStorage.getItem('favouriteMovies')!);
+
+		if (movieFavourites) {
+			setFavourite(movieFavourites);
+		}
+
         const currentSearchStr = currentSearch?.get("search")?.trim();
         if (!!currentSearchStr && currentSearchStr.length > 0 && shows.length === 0) {
             handleOnSearch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [favourite]);
+    }, []);
 
     return (
         <Grid container justifyContent="center" style={{ height: "100vh" }}>
