@@ -8,7 +8,6 @@ import { ref, remove, set } from 'firebase/database'
 const SearchPage = () => {
     const [currentSearch, setCurrentSearch] = useSearchParams();
     const [shows, setShows] = useState<ShowType[]>([]);
-    const [isChecked, setChecked] = useState<boolean>(false);
     const [favourite, setFavourite ] = useState<number[]>([])
 
     const label = {
@@ -24,26 +23,19 @@ const SearchPage = () => {
 
     const hadleCheckbox = (e: any, id: number, title: string) => {
         if (e.target.checked === true) {
-            sessionStorage.setItem(`${id}`, 'true')
-            setChecked(true)
-            /* setChecked((isChecked) => {return isChecked = true}) */
-            /* console.log(`${isChecked }: ${id}`); */
+
             setFavourite(favourite => [...favourite, id]);
+            
             set(ref(database, 'favourite/' + id), {
                 id: id,
                 name: title
             });
-            /* console.log(`${title} con id=${id} aggiunto al database`) */
-            
+            localStorage.setItem('favouriteMovies', JSON.stringify(favourite))
 
         } else {
-            sessionStorage.setItem(`${id}`, 'false')
-            /* setChecked((isChecked) => {return isChecked = false}) */
-            setChecked(true)
-            /* console.log(`${isChecked }: ${id}`); */
             setFavourite(favourite.filter(el => el !== id));
             remove(ref(database, 'favourite/' + id))
-            /* console.log(`${title} con id=${id} rimosso dal database`) */
+            localStorage.setItem('favouriteMovies', JSON.stringify(favourite))
         }
     };
 
@@ -54,7 +46,16 @@ const SearchPage = () => {
     }, [currentSearch]);
 
     useEffect(() => {
-        console.log(favourite);
+        const data : any = localStorage.getItem('favouriteMovies')
+        var array = JSON.parse(data);
+        if (array !== null) {
+            console.log('array data: '+ array);
+            favourite.concat(array);
+            
+            console.log('array2 concatenato: '+ favourite);
+            console.log('favouriteMovies nel local storage: '+favourite);
+            
+        }
         
         const currentSearchStr = currentSearch?.get("search")?.trim();
         if (!!currentSearchStr && currentSearchStr.length > 0 && shows.length === 0) {

@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logOut = () => {
     auth.signOut().then(function () {
       setCurrentUser(null);
+      localStorage.clean()
     }).catch(function (error) {
       console.log(error);
     })
