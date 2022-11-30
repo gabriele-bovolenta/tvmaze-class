@@ -53,6 +53,22 @@ const SearchPage = () => {
         });
     }
 
+    const handleChecked = (id: number) => {
+        const movieFavourites : number[] = JSON.parse(localStorage.getItem('favouriteMovies')!);
+        var result = false;
+
+        if(movieFavourites) {
+            movieFavourites.forEach((el: number) => {
+                if(el === id) {
+                    result = true;
+                    return false
+                }   
+            });
+        } 
+
+        return result
+    }
+
     const hadleCheckbox = (e: any, id: number, title: string) => {
         if (e.target.checked === true) {
             addFavouriteMovie(id)
@@ -108,7 +124,7 @@ const SearchPage = () => {
             <Grid item style={{ padding: "2em" }} />
             {shows.map((el, i) => (
                 <Card key={i} sx={{ display: 'flex', alignItems: 'center', margin: '2em' }}>
-                    <Checkbox {...label} onChange={(e) => { hadleCheckbox(e, el.id, el.title) }} />
+                    <Checkbox {...label} onChange={(e) => { hadleCheckbox(e, el.id, el.title) }} checked={handleChecked(el.id)} />
                     <CardMedia component='img' height={140} image={el.image} alt={el.title} />
                     <CardContent>
                         <Typography gutterBottom variant="h5" >{el.title}</Typography>
