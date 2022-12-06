@@ -11,13 +11,13 @@ const Favourite = () => {
     const data = JSON.parse(localStorage.getItem('favourite')!)
 
     useEffect(() => {
-        console.log(data)
+        console.log(data) 
     }, [data])
     
 
     return (
         <>
-            {data.map((e:any) =><pre>{e.name}</pre> )}
+            {data.map((e:any) =><pre>{e.name}</pre>)}
         </>
     );
 }
