@@ -7,7 +7,7 @@ const Protected = ({ children }: AuthProviderProps) => {
     if (currentUser === undefined) {
         return (
             <>
-                
+                <h1>LOADING</h1>
             </>
         )
     } else if (currentUser === null) {

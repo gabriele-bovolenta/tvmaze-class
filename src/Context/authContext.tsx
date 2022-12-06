@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
       else {
         setCurrentUser(null)
-        localStorage.removeItem('favourite');
       }
     });
     return unsubscribe;
@@ -58,7 +57,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logOut = () => {
     auth.signOut().then(function () {
-      localStorage.removeItem('favourite');
       setCurrentUser(null);
     }).catch(function (error) {
       console.log(error);

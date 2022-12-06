@@ -6,9 +6,7 @@
 // controllare checkbox
 
 import { useEffect } from "react";
-import useFirebaseFavourite from "../Firebase/useFirebaseFavourite";
-
-
+import useFirebaseFavourite from "../Context/useFirebaseFavourite";
 
 const Favourite = () => {
     const [favourites] = useFirebaseFavourite()

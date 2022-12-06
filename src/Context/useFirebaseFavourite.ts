@@ -1,6 +1,6 @@
 import { getDatabase, onValue, ref, remove, set } from "firebase/database";
 import { useEffect, useState } from "react";
-import { UseUserAuth } from "../Context/authContext";
+import { UseUserAuth } from "./authContext";
 
 type FavType = {
   id: number;
