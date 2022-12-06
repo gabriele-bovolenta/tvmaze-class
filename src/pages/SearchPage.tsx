@@ -2,8 +2,7 @@ import { Button, Card, CardContent, CardMedia, Checkbox, FormControl, Grid, Inpu
 import { useCallback, useEffect, useState } from "react";
 import { getShowsBySearch, ShowType } from "../Api";
 import { Link, useSearchParams } from "react-router-dom";
-import { database } from '../Firebase/firebase-config'
-import { ref, remove, set } from 'firebase/database'
+import { saveToLocalStorage, removeMovieDatabase, addMovieDatabase, handleChecked } from '../Api/handleFavourite'
 
 const SearchPage = () => {
     const [currentSearch, setCurrentSearch] = useSearchParams();
@@ -23,13 +22,10 @@ const SearchPage = () => {
         getShowsBySearch(currentSearch?.get("search") || "").then((res) => setShows(res));
     }, [currentSearch]);
 
-    const saveToLocalStorage = (items: any) => {
-        localStorage.setItem('favouriteMovies', JSON.stringify(items));
-    };
-
     const label = {
         inputprops: { 'arial-label': 'checkbox-favourites' }
     }
+
     const addFavouriteMovie = (id: number) => {
         const newFavouriteList = [...favourite, id];
         setFavourite(newFavouriteList);
@@ -41,33 +37,6 @@ const SearchPage = () => {
         setFavourite(newFavouriteList);
         saveToLocalStorage(newFavouriteList);
     };
-
-    const removeMovieDatabase = (id: number) => {
-        remove(ref(database, 'favourite/' + id))
-    }
-
-    const addMovieDatabase = (id: number, title: string) => {
-        set(ref(database, 'favourite/' + id), {
-            id: id,
-            name: title
-        });
-    }
-
-    const handleChecked = (id: number) => {
-        const movieFavourites : number[] = JSON.parse(localStorage.getItem('favouriteMovies')!);
-        var result = false;
-
-        if(movieFavourites) {
-            movieFavourites.forEach((el: number) => {
-                if(el === id) {
-                    result = true;
-                    return false
-                }   
-            });
-        } 
-
-        return result
-    }
 
     const hadleCheckbox = (e: any, id: number, title: string) => {
         if (e.target.checked === true) {
