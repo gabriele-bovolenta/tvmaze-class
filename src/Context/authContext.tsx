@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { auth, provider } from "../Firebase/firebase-config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
-import { readDatabase } from '../Firebase/handleFavourite'
 
 export interface AuthProviderProps {
   children: ReactNode
@@ -28,7 +27,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        readDatabase(user.uid)
       }
       else {
         setCurrentUser(null)

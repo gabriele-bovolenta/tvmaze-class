@@ -13,23 +13,14 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { getShowsBySearch, ShowType } from "../Api";
 import { Link, useSearchParams } from "react-router-dom";
-import {
-  removeMovieDatabase,
-  addMovieDatabase,
-  handleChecked,
-} from "../Firebase/handleFavourite";
-import { UseUserAuth } from "../Context/authContext";
 import useFirebaseFavourite from "../Firebase/useFirebaseFavourite";
 
 const SearchPage = () => {
-  const { currentUser } = UseUserAuth();
   const [currentSearch, setCurrentSearch] = useSearchParams();
   const [shows, setShows] = useState<ShowType[]>([]);
 
   const [favourites, addToFavourite, removeFromFavourite] = useFirebaseFavourite()
-
-
-
+  
   const handleOnSearchChange = useCallback(
     (query: string) => {
       setCurrentSearch({ search: query });
