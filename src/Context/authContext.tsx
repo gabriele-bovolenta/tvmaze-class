@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { auth, provider } from "../Firebase/firebase-config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
+import { readDatabase } from '../Firebase/handleFavourite'
 
 export interface AuthProviderProps {
   children: ReactNode
@@ -27,14 +28,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
+        readDatabase(user.uid)
       }
       else {
         setCurrentUser(null)
-        localStorage.removeItem('favouriteMovies');
+        localStorage.removeItem('favourite');
       }
     });
     return unsubscribe;
-  }, []);
+  }, [currentUser]);
 
   const signUp = async (email: string, password: string) => {
     await createUserWithEmailAndPassword(auth, email, password)
@@ -58,7 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logOut = () => {
     auth.signOut().then(function () {
-      localStorage.removeItem('favouriteMovies');
+      localStorage.removeItem('favourite');
       setCurrentUser(null);
     }).catch(function (error) {
       console.log(error);

@@ -2,12 +2,13 @@ import { Button, Card, CardContent, CardMedia, Checkbox, FormControl, Grid, Inpu
 import { useCallback, useEffect, useState } from "react";
 import { getShowsBySearch, ShowType } from "../Api";
 import { Link, useSearchParams } from "react-router-dom";
-import { saveToLocalStorage, removeMovieDatabase, addMovieDatabase, handleChecked } from '../Api/handleFavourite'
+import { removeMovieDatabase, addMovieDatabase, handleChecked } from '../Firebase/handleFavourite'
+import { UseUserAuth } from "../Context/authContext";
 
 const SearchPage = () => {
+    const { currentUser } = UseUserAuth();
     const [currentSearch, setCurrentSearch] = useSearchParams();
     const [shows, setShows] = useState<ShowType[]>([]);
-    const [favourite, setFavourite] = useState<number[]>([])
 
     const handleOnSearchChange = useCallback(
         (query: string) => {
@@ -19,41 +20,26 @@ const SearchPage = () => {
     const isSearchButtonDisabled = () => currentSearch.get("search")?.trim().length === 0;
 
     const handleOnSearch = useCallback(() => {
-        getShowsBySearch(currentSearch?.get("search") || "").then((res) => setShows(res));
+        getShowsBySearch(currentSearch?.get("search") || ''!).then((res) => setShows(res));
     }, [currentSearch]);
 
     const label = {
         inputprops: { 'arial-label': 'checkbox-favourites' }
     }
 
-    const addFavouriteMovie = (id: number) => {
-        const newFavouriteList = [...favourite, id];
-        setFavourite(newFavouriteList);
-        saveToLocalStorage(newFavouriteList);
-    };
-
-    const removeFavouriteMovie = (id: number) => {
-        const newFavouriteList = favourite.filter(el => el !== id);
-        setFavourite(newFavouriteList);
-        saveToLocalStorage(newFavouriteList);
-    };
-
     const hadleCheckbox = (e: any, id: number, title: string) => {
         if (e.target.checked === true) {
-            addFavouriteMovie(id)
-            addMovieDatabase(id, title)
-
+            addMovieDatabase(currentUser!.uid, id, title)
         } else {
-            removeFavouriteMovie(id)
-            removeMovieDatabase(id)
+            removeMovieDatabase( currentUser!.uid ,id)
         }
     };
 
     useEffect(() => {
-        const movieFavourites = JSON.parse(localStorage.getItem('favouriteMovies')!);
-
-        if (movieFavourites) {
-            setFavourite(movieFavourites);
+        const movieFavourites = JSON.parse(localStorage.getItem('favourite')!);
+        const arrayData = []
+        for (const key in movieFavourites) {
+            arrayData.push(movieFavourites[key])
         }
 
         const currentSearchStr = currentSearch?.get("search")?.trim();
