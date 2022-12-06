@@ -19,7 +19,8 @@ const SearchPage = () => {
   const [currentSearch, setCurrentSearch] = useSearchParams();
   const [shows, setShows] = useState<ShowType[]>([]);
 
-  const [favourites, addToFavourite, removeFromFavourite] = useFirebaseFavourite()
+  const [favourites, addToFavourite, removeFromFavourite] =
+    useFirebaseFavourite();
 
   const handleOnSearchChange = useCallback(
     (query: string) => {
@@ -32,7 +33,7 @@ const SearchPage = () => {
     currentSearch.get("search")?.trim().length === 0;
 
   const handleOnSearch = useCallback(() => {
-    getShowsBySearch(currentSearch?.get("search") || ""!).then((res) =>
+    getShowsBySearch(currentSearch?.get("search") || "").then((res) =>
       setShows(res)
     );
   }, [currentSearch]);
@@ -50,7 +51,7 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    console.log(favourites)
+    console.log(favourites);
     const currentSearchStr = currentSearch?.get("search")?.trim();
     if (
       !!currentSearchStr &&
@@ -79,7 +80,7 @@ const SearchPage = () => {
               id="outlined-basic"
               placeholder="Search by title..."
               onChange={(e) => handleOnSearchChange(e.target.value)}
-              value={currentSearch.get("search")}
+              value={currentSearch.get("search") || ""}
               autoFocus
             />
           </FormControl>
@@ -103,10 +104,7 @@ const SearchPage = () => {
           <Checkbox
             {...label}
             onChange={(e) => {
-              handleCheckbox(
-                !!favourites.find((d) => el.id === d.id),
-                el.id,
-              );
+              handleCheckbox(!!favourites.find((d) => el.id === d.id), el.id);
             }}
             checked={!!favourites.find((d) => el.id === d.id)}
           />

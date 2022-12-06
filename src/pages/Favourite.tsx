@@ -9,18 +9,14 @@ import { useEffect } from "react";
 import useFirebaseFavourite from "../Context/useFirebaseFavourite";
 
 const Favourite = () => {
-    const [favourites] = useFirebaseFavourite()
+  const [favourites] = useFirebaseFavourite();
 
-    useEffect(() => {
-        console.log(favourites)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [favourites]);
-    
+  useEffect(() => {
+    console.log(favourites);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favourites]);
 
-    return (
-        <>
-        </>
-    );
-}
+  return <></>;
+};
 
 export default Favourite;
