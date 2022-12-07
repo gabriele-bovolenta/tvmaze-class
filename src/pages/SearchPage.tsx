@@ -27,7 +27,7 @@ const SearchPage = () => {
       setCurrentSearch({ search: query });
     },
     [setCurrentSearch]
-  );
+  ); 
 
   const isSearchButtonDisabled = () =>
     currentSearch.get("search")?.trim().length === 0;
@@ -42,16 +42,15 @@ const SearchPage = () => {
     inputprops: { "arial-label": "checkbox-favourites" },
   };
 
-  const handleCheckbox = (checked: boolean, id: number) => {
+  const handleCheckbox = (checked: boolean, id: number, title: string, image?: string, description?: string) => {
     if (checked) {
       removeFromFavourite(id);
     } else {
-      addToFavourite(id);
+      addToFavourite(id, title, image, description);
     }
   };
 
   useEffect(() => {
-    console.log(favourites);
     const currentSearchStr = currentSearch?.get("search")?.trim();
     if (
       !!currentSearchStr &&
@@ -104,7 +103,7 @@ const SearchPage = () => {
           <Checkbox
             {...label}
             onChange={(e) => {
-              handleCheckbox(!!favourites.find((d) => el.id === d.id), el.id);
+              handleCheckbox(!!favourites.find((d) => el.id === d.id), el.id, el.title, el.image, el.description);
             }}
             checked={!!favourites.find((d) => el.id === d.id)}
           />

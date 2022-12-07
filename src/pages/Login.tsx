@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { currentUser, signUp, signWithGoogle } = UseUserAuth();
+  const { currentUser, createAccount, signInWithGoogle } = UseUserAuth();
 
   let navigate = useNavigate();
 
@@ -26,17 +26,17 @@ function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleSignUp = () => {
+  const handleCreateAccount = () => {
     try {
-      signUp(email, password);
+      createAccount(email, password);
     } catch (err: any) {
       console.log(err);
     }
   };
 
-  const handleSignWithGoogle = () => {
+  const handleSignInWithGoogle = () => {
     try {
-      signWithGoogle();
+      signInWithGoogle();
     } catch (err: any) {
       console.log(err);
     }
@@ -85,11 +85,11 @@ function Login() {
               fullWidth
               variant="contained"
               sx={{ mt: 2, mb: 2 }}
-              onClick={handleSignUp}
+              onClick={handleCreateAccount}
             >
-              Sign In
+              Create Account
             </Button>
-            <GoogleButton onClick={handleSignWithGoogle} />
+            <GoogleButton onClick={handleSignInWithGoogle} />
           </Box>
         </Box>
       </Container>

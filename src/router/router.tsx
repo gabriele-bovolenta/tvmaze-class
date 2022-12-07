@@ -18,8 +18,8 @@ const Router = () => {
       path: "/home",
       element: (
         <Protected>
-          {" "}
-          <Home />{" "}
+          <Navbar></Navbar>
+          <Home />
         </Protected>
       ),
     },
@@ -27,8 +27,8 @@ const Router = () => {
       path: "/search",
       element: (
         <Protected>
-          {" "}
-          <SearchPage />{" "}
+          <Navbar></Navbar>
+          <SearchPage />
         </Protected>
       ),
     },
@@ -36,8 +36,8 @@ const Router = () => {
       path: "/search/:showId",
       element: (
         <Protected>
-          {" "}
-          <DetailPage />{" "}
+          <Navbar></Navbar>
+          <DetailPage />
         </Protected>
       ),
     },
@@ -45,8 +45,8 @@ const Router = () => {
       path: "/favourite",
       element: (
         <Protected>
-          {" "}
-          <Favourite />{" "}
+          <Navbar></Navbar>
+          <Favourite />
         </Protected>
       ),
     },
@@ -54,7 +54,6 @@ const Router = () => {
 
   return (
     <>
-      <Navbar></Navbar>
       <RouterProvider router={router} />
     </>
   );

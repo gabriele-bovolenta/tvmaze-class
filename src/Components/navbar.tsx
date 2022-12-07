@@ -7,11 +7,7 @@ import Button from "@mui/material/Button";
 import { UseUserAuth } from "../Context/authContext";
 
 export default function ButtonAppBar() {
-  const { currentUser, logOut } = UseUserAuth();
-
-  if (currentUser === undefined) {
-    return <></>;
-  }
+  const { logOut } = UseUserAuth();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -20,8 +16,6 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             TVMaze
           </Typography>
-          {!!currentUser ? (
-            <>
               <Button color="inherit" href="/search">
                 Search
               </Button>
@@ -34,12 +28,6 @@ export default function ButtonAppBar() {
               <Button color="inherit" href="/login" onClick={logOut}>
                 Logout
               </Button>
-            </>
-          ) : (
-            <Button color="inherit" href="/login">
-              Login
-            </Button>
-          )}
         </Toolbar>
       </AppBar>
     </Box>

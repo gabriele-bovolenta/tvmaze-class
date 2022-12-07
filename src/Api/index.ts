@@ -7,6 +7,7 @@ type ShowApiResType = {
     image?: {
       medium: string;
     };
+    summary: string
   };
 };
 
@@ -14,6 +15,7 @@ export type ShowType = {
   id: number;
   title: string;
   image?: string;
+  description?: string;
 };
 
 export const getShowsBySearch = async (query: string) => {
@@ -31,6 +33,7 @@ export const getShowsBySearch = async (query: string) => {
     id: el.show.id,
     title: el.show.name,
     image: el.show.image?.medium,
+    description: el.show.summary,
   }));
 
   return mappedData;

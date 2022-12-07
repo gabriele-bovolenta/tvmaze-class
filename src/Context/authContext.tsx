@@ -9,7 +9,9 @@ import { auth, provider } from "../Firebase/firebase-config";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   User,
 } from "firebase/auth";
 
@@ -19,15 +21,17 @@ export interface AuthProviderProps {
 
 interface authContext {
   currentUser?: User | null;
-  signUp: (email: string, password: string) => void;
-  signWithGoogle: () => void;
+  createAccount: (email: string, password: string) => void;
+  signIn: (email: string, password: string) => void;
+  signInWithGoogle: () => void;
   logOut: () => void;
 }
 
 export const AuthContext = createContext<authContext>({
   currentUser: undefined,
-  signUp: async () => {},
-  signWithGoogle: async () => {},
+  createAccount: async () => {},
+  signIn: async () => {},
+  signInWithGoogle: async () => {},
   logOut: async () => {},
 });
 
@@ -39,50 +43,60 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (user) {
         setCurrentUser(user);
       } else {
-        setCurrentUser(null);
+        setCurrentUser(null)
       }
     });
     return unsubscribe;
   }, [currentUser]);
 
-  const signUp = async (email: string, password: string) => {
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential.user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        alert(errorCode);
-        alert(errorMessage);
-      });
+  const createAccount = async (email: string, password: string) => {
+    try {
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const signWithGoogle = async () => {
-    await signInWithPopup(auth, provider).then((result) => {
-      setCurrentUser(result.user);
-    });
+  const signIn = async (email: string, password: string) => {
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const logOut = () => {
-    auth
-      .signOut()
-      .then(function () {
-        setCurrentUser(null);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    signOut(auth).then(() => {
+    }).catch((error) => {
+      console.log(error);
+    });
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ currentUser, signUp, signWithGoogle, logOut }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    currentUser,
+    createAccount,
+    signIn,
+    signInWithGoogle,
+    logOut,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const UseUserAuth = () => {
