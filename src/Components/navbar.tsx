@@ -11,12 +11,6 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 
-/* const pages = [
-  <Link to='/home'>Home</Link>, 
-  <Link to='/search'>Search</Link>, 
-  <Link to='/favourite'>Favourite</Link>
-]; */
-
 const pages = [
   'home', 'favourite', 'search'
 ]

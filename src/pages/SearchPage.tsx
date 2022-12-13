@@ -129,9 +129,6 @@ const SearchPage = () => {
                   <Link to={el.id.toString()}>
                     <Button variant="contained">Details</Button>
                   </Link>
-                  {/* <a href="./DetailPage.tsx" className="card__button">
-                    Read more
-                  </a> */}
                 </figcaption>
               </figure>
             </div>
