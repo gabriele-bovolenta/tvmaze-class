@@ -11,11 +11,15 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 
-const pages = [
+/* const pages = [
   <Link to='/home'>Home</Link>, 
   <Link to='/search'>Search</Link>, 
   <Link to='/favourite'>Favourite</Link>
-];
+]; */
+
+const pages = [
+  'home', 'favourite', 'search'
+]
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -86,7 +90,9 @@ function ResponsiveAppBar() {
             >
               {pages.map((page, i) => (
                 <MenuItem key={i} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">
+                  <Link to={"/" + page}>{page}</Link>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
