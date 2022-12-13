@@ -3,14 +3,8 @@ import { UseUserAuth, AuthProviderProps } from "../Context/authContext";
 
 const Protected = ({ children }: AuthProviderProps) => {
   const { currentUser } = UseUserAuth();
-
-  if (currentUser === undefined) {
-    return (
-      <>
-      <p>Loading...</p>
-      </>
-    );
-  } if (currentUser === null) {
+  
+  if (currentUser === null) {
     return <Navigate to="/login" replace />;
   }
 

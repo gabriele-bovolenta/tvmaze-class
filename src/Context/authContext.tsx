@@ -37,17 +37,18 @@ export const AuthContext = createContext<authContext>({
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<User | null>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user);
-      } else {
-        setCurrentUser(null)
-      }
+    const unsubscribe =  onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setIsLoading(false);
     });
-    return unsubscribe;
-  }, [currentUser]);
+    return () => {
+      unsubscribe();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const createAccount = async (email: string, password: string) => {
     try {
@@ -95,8 +96,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     signInWithGoogle,
     logOut,
   };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  
+  return isLoading ? <div>Loading..</div> : <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const UseUserAuth = () => {

@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { UseUserAuth } from "../Context/authContext";
+import { Link } from "react-router-dom";
 
 export default function ButtonAppBar() {
   const { logOut } = UseUserAuth();
@@ -16,18 +17,22 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             TVMaze
           </Typography>
-              <Button color="inherit" href="/search">
-                Search
-              </Button>
-              <Button color="inherit" href="/favourite">
-                favourite
-              </Button>
-              <Button color="inherit" href="/home">
-                Home
-              </Button>
-              <Button color="inherit" href="/login" onClick={logOut}>
-                Logout
-              </Button>
+          <Link to={"/search"}>
+            <Button color="inherit">
+              Search
+            </Button>
+          </Link>
+          <Link to={"/favourite"}>
+            <Button color="inherit">
+              Favourite
+            </Button>
+          </Link>
+          <Link to={"/home"}>
+            <Button color="inherit">
+              Home
+            </Button>
+          </Link>
+          <Button color="inherit" onClick={logOut}>Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>

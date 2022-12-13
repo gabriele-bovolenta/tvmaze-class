@@ -15,16 +15,16 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const { currentUser, createAccount, signInWithGoogle } = UseUserAuth();
 
-  let navigate = useNavigate();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (currentUser !== null) {
-      navigate("/home");
+        navigate('/home')
     }
-  }, [navigate, currentUser]);
-
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+}, [navigate, currentUser])
 
   const handleCreateAccount = () => {
     try {
