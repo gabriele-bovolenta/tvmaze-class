@@ -2,7 +2,9 @@ import { Button, Checkbox, Grid } from "@mui/material";
 import { useEffect } from "react";
 import useFirebaseFavourite from "../Context/useFirebaseFavourite";
 import { Interweave } from "interweave";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import Favorite from "@mui/icons-material/Favorite";
+import { lightGreen } from "@mui/material/colors";
 
 const Favourite = () => {
   const [favourites, addToFavourite, removeFromFavourite] =
@@ -45,21 +47,32 @@ const Favourite = () => {
               key={el.id}
               className="card"
               style={{ backgroundColor: "black" }}
-              >
-              <Checkbox
-                style={{ backgroundColor: "white" }}
-                {...label}
-                onChange={(e) => {
-                  handleCheckbox(
-                    !!favourites.find((d) => el.id === d.id),
-                    el.id,
-                    el.title,
-                    el.image,
-                    el.description
+            >
+              <div className="custom-checkbox">
+                <Checkbox
+                  checkedIcon={<Favorite />}
+                  sx={{
+                    "& .MuiSvgIcon-root": { fontSize: 40 },
+                    color: lightGreen[100],
+                    "&.Mui-checked": { color: lightGreen[300] },
+                  }}
+                  style={{
+                    backgroundColor: "transparent",
+                    position: "relative",
+                  }}
+                  {...label}
+                  onChange={(e) => {
+                    handleCheckbox(
+                      !!favourites.find((d) => el.id === d.id),
+                      el.id,
+                      el.title,
+                      el.image,
+                      el.description
                     );
                   }}
                   checked={!!favourites.find((d) => el.id === d.id)}
-                  />
+                />
+              </div>
               <figure className="card__thumb">
                 <img src={el.image} alt="" className="card__image" />
                 <figcaption className="card__caption">
@@ -68,10 +81,20 @@ const Favourite = () => {
                     className="card__snippet"
                     content={el.description}
                   />
-                  <Link to={'/search/'+el.id.toString()}>
-                    <Button variant="contained">Details</Button>
+                  <Link to={"/search/" + el.id.toString()}>
+                    <Button
+                      variant="contained"
+                      style={{
+                        borderRadius: 35,
+                        backgroundColor: "#634b66",
+                        padding: "9px 18px",
+                        fontSize: "15px",
+                      }}
+                    >
+                      Details
+                    </Button>
                   </Link>
-                </figcaption> 
+                </figcaption>
               </figure>
             </div>
           ))}

@@ -22,7 +22,7 @@ export interface AuthProviderProps {
 interface authContext {
   currentUser?: User | null;
   createAccount: (email: string, password: string) => void;
-  signIn: (email: string, password: string) => void;
+  login: (email: string, password: string) => void;
   signInWithGoogle: () => void;
   logOut: () => void;
 }
@@ -30,7 +30,7 @@ interface authContext {
 export const AuthContext = createContext<authContext>({
   currentUser: undefined,
   createAccount: async () => {},
-  signIn: async () => {},
+  login: async () => {},
   signInWithGoogle: async () => {},
   logOut: async () => {},
 });
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const signIn = async (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(
         auth,
@@ -71,6 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       );
     } catch (error) {
       console.log(error);
+      alert('Your e-mail or your password are wrong')
     }
   };
 
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const value = {
     currentUser,
     createAccount,
-    signIn,
+    login,
     signInWithGoogle,
     logOut,
   };

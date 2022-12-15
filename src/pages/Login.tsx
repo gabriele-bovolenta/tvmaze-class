@@ -1,30 +1,23 @@
 import Button from "@mui/material/Button";
-import {
-  Avatar,
-  Box,
-  Container,
-  CssBaseline,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Container, TextField, Typography } from "@mui/material";
 import GoogleButton from "react-google-button";
 import { UseUserAuth } from "../Context/authContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { currentUser, createAccount, signInWithGoogle } = UseUserAuth();
+  const { currentUser, createAccount, signInWithGoogle, login } = UseUserAuth();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (currentUser !== null) {
-        navigate('/home')
+      navigate("/search");
     }
-}, [navigate, currentUser])
+  }, [navigate, currentUser]);
 
   const handleCreateAccount = () => {
     try {
@@ -34,9 +27,9 @@ function Login() {
     }
   };
 
-  const handleSignInWithGoogle = () => {
+  const handleLogin = () => {
     try {
-      signInWithGoogle();
+      login(email, password);
     } catch (err: any) {
       console.log(err);
     }
@@ -45,7 +38,6 @@ function Login() {
   return (
     <>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -82,14 +74,48 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <Button
-              fullWidth
               variant="contained"
-              sx={{ mt: 2, mb: 2 }}
+              style={{
+                marginTop: 15,
+                marginRight: "auto",
+                marginBottom: 15,
+                marginLeft: "auto",
+                display: "flex",
+                borderRadius: 35,
+                backgroundColor: "#634b66",
+                padding: "9px 18px",
+                fontSize: "15px",
+              }}
               onClick={handleCreateAccount}
             >
               Create Account
             </Button>
-            <GoogleButton onClick={handleSignInWithGoogle} />
+            <Button
+              variant="contained"
+              style={{
+                marginTop: 15,
+                marginRight: "auto",
+                marginBottom: 15,
+                marginLeft: "auto",
+                display: "flex",
+                borderRadius: 35,
+                backgroundColor: "#634b66",
+                padding: "9px 18px",
+                fontSize: "15px",
+              }}
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+            <GoogleButton
+              style={{
+                marginTop: 15,
+                marginRight: "auto",
+                marginBottom: 15,
+                marginLeft: "auto",
+              }}
+              onClick={signInWithGoogle}
+            />
           </Box>
         </Box>
       </Container>

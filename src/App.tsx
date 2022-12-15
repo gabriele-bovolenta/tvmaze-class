@@ -3,7 +3,6 @@ import { AuthProvider } from "./Context/authContext";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Home from "./Pages/home";
 import Login from "./Pages/Login";
 import SearchPage from "./Pages/SearchPage";
 import DetailPage from "./Pages/DetailPage";
@@ -15,15 +14,6 @@ import Protected from "./Router/protected";
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/login", element: <Login /> },
-  {
-    path: "/home",
-    element: (
-      <Protected>
-        <Navbar></Navbar>
-        <Home />
-      </Protected>
-    ),
-  },
   {
     path: "/search",
     element: (

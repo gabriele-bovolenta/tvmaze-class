@@ -10,14 +10,17 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import { UseUserAuth } from "../Context/authContext";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const pages = [
-  'home', 'favourite', 'search'
+  'favourite', 'search'
 ]
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const { logOut } = UseUserAuth(); 
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -109,14 +112,17 @@ function ResponsiveAppBar() {
           >
             TVMAZE
           </Typography>
+          <Button onClick={logOut}>
+          <LogoutIcon sx={{color:'white'}}></LogoutIcon>
+          </Button>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page, i) => (
+            {pages.map((page) => (
               <Button
-                key={i}
+                key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link to={"/" + page}>{page}</Link>
               </Button>
             ))}
           </Box>

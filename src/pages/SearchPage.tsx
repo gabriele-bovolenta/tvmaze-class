@@ -11,6 +11,9 @@ import { getShowsBySearch, ShowType } from "../Api";
 import { Link, useSearchParams } from "react-router-dom";
 import useFirebaseFavourite from "../Context/useFirebaseFavourite";
 import { Interweave } from "interweave";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import Favorite from "@mui/icons-material/Favorite";
+import { lightGreen } from "@mui/material/colors";
 
 const SearchPage = () => {
   const [currentSearch, setCurrentSearch] = useSearchParams();
@@ -41,7 +44,7 @@ const SearchPage = () => {
 
   const handleCheckbox = (
     checked: boolean,
-    id: number,
+    id: number, 
     title: string,
     image?: string,
     description?: string
@@ -104,20 +107,30 @@ const SearchPage = () => {
           style={{ minHeight: "100vh", padding: "2em", width: "100%" }}
         >
           {shows.map((el: any) => (
-            <div key={el.id} className="card" style={{backgroundColor: 'black'}}>
-              <Checkbox style={{backgroundColor: 'white'}}
-                {...label}
-                onChange={(e) => {
-                  handleCheckbox(
-                    !!favourites.find((d) => el.id === d.id),
-                    el.id,
-                    el.title,
-                    el.image,
-                    el.description
-                  );
-                }}
-                checked={!!favourites.find((d) => el.id === d.id)}
-              />
+            <div
+              key={el.id}
+              className="card"
+              style={{ backgroundColor: "black" }}
+            >
+              <div className="custom-checkbox">
+                <Checkbox
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                  sx={{ '& .MuiSvgIcon-root': { fontSize: 40 }, color: lightGreen[100], '&.Mui-checked': { color: lightGreen[300]} }}
+                  style={{ backgroundColor: "transparent", position: "relative" }}
+                  {...label}
+                  onChange={(e) => {
+                    handleCheckbox(
+                      !!favourites.find((d) => el.id === d.id),
+                      el.id,
+                      el.title,
+                      el.image,
+                      el.description
+                    );
+                  }}
+                  checked={!!favourites.find((d) => el.id === d.id)}
+                />
+              </div>
               <figure className="card__thumb">
                 <img src={el.image} alt="" className="card__image" />
                 <figcaption className="card__caption">
@@ -127,7 +140,17 @@ const SearchPage = () => {
                     content={el.description}
                   />
                   <Link to={el.id.toString()}>
-                    <Button variant="contained">Details</Button>
+                    <Button 
+                    variant="contained"
+                    style={{
+                      borderRadius: 35,
+                      backgroundColor: "#634b66",
+                      padding: "9px 18px",
+                      fontSize: "15px"
+                  }}
+                    >
+                      Details
+                    </Button>
                   </Link>
                 </figcaption>
               </figure>
