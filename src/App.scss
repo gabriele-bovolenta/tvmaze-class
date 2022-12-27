@@ -8,19 +8,13 @@ $desktop: 1024px;
   }
 }
 
-
-$uno: #e5ffde;
-$due: #bbcbcb;
-$tre: #634b66;
-$quattro: #9590a8;
-$cinque: #18020c;
-
-/* html {
-  background-color: $tre;
-} */
+$uno: #efebde;
+$due: #e6ddc4;
+$tre: #678983;
+$quattro: #181d31;
 
 body {
-  background-color: $uno;
+  background: linear-gradient($tre, $quattro);
 }
 
 .card {
@@ -163,7 +157,15 @@ ul li a {
 }
 
 // DESKTOP
- button a {
+button a {
   text-decoration: none;
   color: white;
- }
+}
+
+.login-page {
+  padding: 15px;
+  border-radius: 25px;
+  background-color: $uno;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+  color: $quattro;
+}
