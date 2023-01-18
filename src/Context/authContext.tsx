@@ -1,3 +1,4 @@
+// Import react
 import {
   createContext,
   ReactNode,
@@ -5,6 +6,8 @@ import {
   useEffect,
   useState,
 } from "react";
+
+// Import firebase
 import { auth, provider } from "../Firebase/firebase-config";
 import {
   createUserWithEmailAndPassword,
@@ -36,45 +39,42 @@ export const AuthContext = createContext<authContext>({
 });
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+
+  // States
   const [currentUser, setCurrentUser] = useState<User | null>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe =  onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setIsLoading(false);
     });
     return () => {
       unsubscribe();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Create account 
   const createAccount = async (email: string, password: string) => {
     try {
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await createUserWithEmailAndPassword(auth, email, password);
     } catch (error) {
       console.log(error);
     }
   };
 
+  // Login
   const login = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       console.log(error);
-      alert('Your e-mail or your password are wrong')
+      alert("Your e-mail or your password are wrong");
     }
   };
 
+  // Sing with google
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);
@@ -83,11 +83,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  // Logout
   const logOut = () => {
-    signOut(auth).then(() => {
-    }).catch((error) => {
-      console.log(error);
-    });
+    signOut(auth)
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const value = {
@@ -97,8 +99,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     signInWithGoogle,
     logOut,
   };
-  
-  return isLoading ? <div>Loading..</div> : <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+
+  return isLoading ? (
+    <div>Loading..</div>
+  ) : (
+    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  );
 };
 
 export const UseUserAuth = () => {

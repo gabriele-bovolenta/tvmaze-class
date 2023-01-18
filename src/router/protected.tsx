@@ -1,4 +1,7 @@
+// Import react routed dom
 import { Navigate } from "react-router-dom";
+
+// Import context auth
 import { UseUserAuth, AuthProviderProps } from "../Context/authContext";
 
 const Protected = ({ children }: AuthProviderProps) => {

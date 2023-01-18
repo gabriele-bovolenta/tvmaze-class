@@ -1,10 +1,21 @@
-import { Button, Checkbox, Grid } from "@mui/material";
+// Import react
 import { useEffect } from "react";
+
+// Import custom hook favourite
 import useFirebaseFavourite from "../Context/useFirebaseFavourite";
-import { Interweave } from "interweave";
+
+// Import react-router-dom
 import { Link } from "react-router-dom";
-import Favorite from "@mui/icons-material/Favorite";
+
+// Import MUI
+import { Button, Checkbox, Grid } from "@mui/material";
 import { lightGreen } from "@mui/material/colors";
+
+// Favorite icon
+import Favorite from "@mui/icons-material/Favorite";
+
+// Import interwave
+import { Interweave } from "interweave";
 
 const Favourite = () => {
   const [favourites, addToFavourite, removeFromFavourite] =

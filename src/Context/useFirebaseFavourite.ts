@@ -5,7 +5,7 @@ import { ShowType } from "../Api/index";
 
 const database = getDatabase();
 
-// custom hook
+// Custom hook
 const useFirebaseFavourite = (): [
   favorites: ShowType[],
   addToFavourite: (id: number, title: string, image?: string, description?: string) => void,
@@ -14,7 +14,7 @@ const useFirebaseFavourite = (): [
   const [favourites, setFavourite] = useState<ShowType[]>([]);
   const { currentUser } = UseUserAuth();
 
-  // on user change, refresh favourites
+  // On user change, refresh favourites
   useEffect(() => {
     if (currentUser) {
       const movies = ref(database, "favourite/" + currentUser.uid);
@@ -29,7 +29,7 @@ const useFirebaseFavourite = (): [
     }
   }, [currentUser]);
 
-  // ad to favourite action
+  // Add to favourite action
   const addToFavourite = (id: number, title: string, image?: string, description?: string) => {
     if (!!currentUser) {
       set(ref(database, "favourite/" + currentUser.uid + "/" + id), {
@@ -41,7 +41,7 @@ const useFirebaseFavourite = (): [
     }
   };
 
-  // remove from favourite action
+  // Remove from favourite action
   const removeFromFavourite = (id: number) => {
     if (!!currentUser) {
       remove(ref(database, "favourite/" + currentUser.uid + "/" + id));

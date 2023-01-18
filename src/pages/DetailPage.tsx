@@ -1,6 +1,13 @@
+// Import react
 import { useEffect, useState } from "react";
+
+// Import react router dom
 import { useParams } from "react-router-dom";
+
+// Import api call
 import { getShowsById, ShowDetailType } from "../Api";
+
+// Import MUI
 import {
   Button,
   Card,
@@ -9,10 +16,15 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+
+// Import interwave
 import { Interweave } from "interweave";
 
 const DetailPage = () => {
+
   const { showId } = useParams();
+  
+  // State
   const [showDetail, setShowDetail] = useState<ShowDetailType | null>(null);
 
   useEffect(() => {

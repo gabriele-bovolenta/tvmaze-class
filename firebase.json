@@ -1,5 +1,8 @@
 {
   "database": {
-    "rules": "y"
+    "rules": {
+      ".read": "true",  
+      ".write": "true"
+    }
   }
 }

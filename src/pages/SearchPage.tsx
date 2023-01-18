@@ -1,3 +1,16 @@
+// Import react
+import { useCallback, useEffect, useState } from "react";
+
+// Import api call
+import { getShowsBySearch, ShowType } from "../Api";
+
+// Import react-router-dom
+import { Link, useSearchParams } from "react-router-dom";
+
+// Import context
+import useFirebaseFavourite from "../Context/useFirebaseFavourite";
+
+// Import MUI
 import {
   Button,
   Checkbox,
@@ -6,22 +19,22 @@ import {
   InputBase,
   Paper,
 } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
-import { getShowsBySearch, ShowType } from "../Api";
-import { Link, useSearchParams } from "react-router-dom";
-import useFirebaseFavourite from "../Context/useFirebaseFavourite";
 import { Interweave } from "interweave";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { lightGreen } from "@mui/material/colors";
 
 const SearchPage = () => {
+
+  // States
   const [currentSearch, setCurrentSearch] = useSearchParams();
   const [shows, setShows] = useState<ShowType[]>([]);
 
+  // Custom hook favourite
   const [favourites, addToFavourite, removeFromFavourite] =
     useFirebaseFavourite();
 
+    // Set current search in the state
   const handleOnSearchChange = useCallback(
     (query: string) => {
       setCurrentSearch({ search: query });
@@ -29,6 +42,7 @@ const SearchPage = () => {
     [setCurrentSearch]
   );
 
+  // Button search disable if string === 0
   const isSearchButtonDisabled = () =>
     currentSearch.get("search")?.trim().length === 0;
 
@@ -42,6 +56,7 @@ const SearchPage = () => {
     inputprops: { "arial-label": "checkbox-favourites" },
   };
 
+  // Add or remove favourite movies
   const handleCheckbox = (
     checked: boolean,
     id: number, 
