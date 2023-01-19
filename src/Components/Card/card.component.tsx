@@ -14,10 +14,10 @@ import useFirebaseFavourite from "../../Context/useFirebaseFavourite";
 import { ShowType } from "../../Api";
 
 type Props = {
-    array: ShowType[];
-  }
+  array: ShowType[];
+};
 
-const CustomCard = (props:Props) => {
+const CustomCard = (props: Props) => {
   const [favourites, addToFavourite, removeFromFavourite] =
     useFirebaseFavourite();
 
