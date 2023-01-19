@@ -81,7 +81,7 @@ export const getShowsById = async (id: number) => {
     startDate: data.premiered,
     endDate: data.ended,
     avgRating: data.rating?.average,
-    image: data.image?.original,
+    image: data.image?.original === undefined || data.image?.original === '' ? require('../images/background.jpeg') : data.image?.original,
     summary: data.summary,
   };
   return mappedData;
