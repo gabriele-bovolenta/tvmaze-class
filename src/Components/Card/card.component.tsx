@@ -7,6 +7,7 @@ import { lightGreen } from "@mui/material/colors";
 
 // Favorite icon
 import Favorite from "@mui/icons-material/Favorite";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 
 // Import interwave
 import { Interweave } from "interweave";
@@ -54,6 +55,7 @@ const CustomCard = (props: Props) => {
           >
             <div className="custom-checkbox">
               <Checkbox
+                icon={<FavoriteBorder />}
                 checkedIcon={<Favorite />}
                 sx={{
                   "& .MuiSvgIcon-root": { fontSize: 40 },
