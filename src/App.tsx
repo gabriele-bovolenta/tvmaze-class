@@ -7,7 +7,7 @@ import Login from "./Pages/Login/Login";
 import SearchPage from "./Pages/SearchPage";
 import DetailPage from "./Pages/DetailPage";
 import Favourite from "./Pages/Favourite";
-import Navbar from "./Components/navbar";
+import Navbar from "./Components/Navbar/navbar.component";
 
 import Protected from "./Router/protected";
 

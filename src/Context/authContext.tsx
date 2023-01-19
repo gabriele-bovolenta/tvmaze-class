@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  // Sing with google
+  // Sign with google
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);

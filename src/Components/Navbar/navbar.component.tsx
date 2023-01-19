@@ -5,7 +5,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 // Import context Auth
-import { UseUserAuth } from "../Context/authContext";
+import { UseUserAuth } from "../../Context/authContext";
 
 // Import MUI
 import AppBar from "@mui/material/AppBar";
