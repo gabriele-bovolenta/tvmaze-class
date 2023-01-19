@@ -3,7 +3,7 @@ import { AuthProvider } from "./Context/authContext";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Login from "./Pages/Login";
+import Login from "./Pages/Login/Login";
 import SearchPage from "./Pages/SearchPage";
 import DetailPage from "./Pages/DetailPage";
 import Favourite from "./Pages/Favourite";

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Import context Auth
-import { UseUserAuth } from "../Context/authContext";
+import { UseUserAuth } from "../../Context/authContext";
 
 // Import react-router-dom
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import {
   Avatar,
   Box,
   Container,
+  CssBaseline,
   Grid,
   TextField,
   Typography,
@@ -20,6 +21,8 @@ import Button from "@mui/material/Button";
 
 // Import Google button
 import GoogleButton from "react-google-button";
+
+import './Login.scss'
 
 const Login = () => {
   // Auth context function
@@ -41,6 +44,7 @@ const Login = () => {
   const handleCreateAccount = () => {
     try {
       createAccount(email, password);
+      navigate("/search")
     } catch (err: any) {
       console.log(err);
     }
@@ -49,6 +53,7 @@ const Login = () => {
   const handleLogin = () => {
     try {
       login(email, password);
+      navigate("/search")
     } catch (err: any) {
       console.log(err);
     }
@@ -56,7 +61,9 @@ const Login = () => {
 
   return (
     <>
-      <Grid
+    <CssBaseline />
+    <div className="login">
+    <Grid
         container
         spacing={0}
         direction="column"
@@ -164,6 +171,9 @@ const Login = () => {
           </Container>
         </Grid>
       </Grid>
+
+    </div>
+      
     </>
   );
 };
