@@ -32,7 +32,7 @@ export const getShowsBySearch = async (query: string) => {
   const mappedData: ShowType[] = data.map((el) => ({
     id: el.show.id,
     title: el.show.name,
-    image: el.show.image?.medium,
+    image: el.show.image?.medium === undefined || el.show.image?.medium === ''? require('../images/background.jpeg') : el.show.image?.medium,
     description: el.show.summary,
   }));
 
