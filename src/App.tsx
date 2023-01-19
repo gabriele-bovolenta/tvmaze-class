@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Login from "./Pages/Login/Login";
 import SearchPage from "./Pages/SearchPage";
-import DetailPage from "./Pages/DetailPage";
+import DetailPage from "./Pages/Detail/DetailPage";
 import Favourite from "./Pages/Favourite";
 import Navbar from "./Components/Navbar/navbar.component";
 
