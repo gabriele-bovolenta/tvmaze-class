@@ -2,10 +2,10 @@
 import { useEffect } from "react";
 
 // Import custom hook favourite
-import useFirebaseFavourite from "../Context/useFirebaseFavourite";
+import useFirebaseFavourite from "../../Context/useFirebaseFavourite";
 
 // Import component
-import CustomCard from "../Components/Card/card.component";
+import CustomCard from "../../Components/Card/card.component";
 
 const Favourite = () => {
   const [favourites] = useFirebaseFavourite();

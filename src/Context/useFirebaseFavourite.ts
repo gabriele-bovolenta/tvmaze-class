@@ -35,7 +35,7 @@ const useFirebaseFavourite = (): [
       set(ref(database, "favourite/" + currentUser.uid + "/" + id), {
         id: id,
         title: title,
-        image: image !== undefined ? image : require('../images/background.jpeg'),
+        image: image !== undefined ? image : require('../Asset/images/background.jpeg'),
         description: description
       });
     }

@@ -2,13 +2,13 @@
 import { useCallback, useEffect, useState } from "react";
 
 // Import api call
-import { getShowsBySearch, ShowType } from "../Api";
+import { getShowsBySearch, ShowType } from "../../Api";
 
 // Import react-router-dom
 import { useSearchParams } from "react-router-dom";
 
 // Import context
-import useFirebaseFavourite from "../Context/useFirebaseFavourite";
+import useFirebaseFavourite from "../../Context/useFirebaseFavourite";
 
 // Import MUI
 import {
@@ -18,7 +18,7 @@ import {
   InputBase,
   Paper,
 } from "@mui/material";
-import CustomCard from "../Components/Card/card.component";
+import CustomCard from "../../Components/Card/card.component";
 
 const SearchPage = () => {
   // States

@@ -26,7 +26,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import "./navbar.scss";
 
 // All pages
-const pages = ["favourite", "search"];
+const pages = ["favourite", "search", "home"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
