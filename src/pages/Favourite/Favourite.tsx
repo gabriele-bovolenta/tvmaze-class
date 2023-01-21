@@ -18,7 +18,7 @@ const Favourite = () => {
 
   return (
     <>
-      <CustomCard array={favourites} />
+        <CustomCard array={favourites} />
     </>
   );
 };
