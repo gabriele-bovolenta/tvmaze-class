@@ -3,13 +3,13 @@ import { AuthProvider } from "./Context/authContext";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Login from "./Pages/Login/Login";
-import SearchPage from "./Pages/SearchPage";
-import DetailPage from "./Pages/Detail/DetailPage";
-import Favourite from "./Pages/Favourite";
+import Login from "./pages/Login/Login";
+import SearchPage from "./pages/SearchPage";
+import DetailPage from "./pages/Detail/DetailPage";
+import Favourite from "./pages/Favourite";
 import Navbar from "./Components/Navbar/navbar.component";
 
-import Protected from "./Router/protected";
+import Protected from "./router/protected";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
