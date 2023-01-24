@@ -11,19 +11,28 @@ import { useSearchParams } from "react-router-dom";
 import useFirebaseFavourite from "../Context/useFirebaseFavourite";
 
 // Import MUI
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputBase,
-  Paper,
-} from "@mui/material";
+import { Button, FormControl, Grid, InputBase, Paper } from "@mui/material";
 import CustomCard from "../Components/Card/card.component";
+
+// Import redux
+import { useSelector, useDispatch } from "react-redux";
+import { setDarkTheme, setDefaultTheme } from "../Redux/theme";
 
 const SearchPage = () => {
   // States
   const [currentSearch, setCurrentSearch] = useSearchParams();
   const [shows, setShows] = useState<ShowType[]>([]);
+
+  const dispatch = useDispatch();
+  const theme = useSelector((state: any) => state.theme);
+
+  const setDark = () => {
+    dispatch(setDarkTheme());
+  };
+
+  const setDefault = () => {
+    dispatch(setDefaultTheme());
+  };
 
   // Custom hook favourite
   const [favourites] = useFirebaseFavourite();
@@ -90,7 +99,15 @@ const SearchPage = () => {
             </FormControl>
           </Paper>
         </Grid>
-
+        {!theme.darkmode ? (
+            <Button variant="contained" onClick={setDark}>
+              Dark theme
+            </Button>
+        ) : (
+          <Button variant="contained" onClick={setDefault}>
+            Light theme
+          </Button>
+        )}
         <CustomCard array={shows} />
       </Grid>
     </>
